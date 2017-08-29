@@ -1,26 +1,64 @@
 {
     "name": "rspec-focus",
     "displayName": "RSpec Focus",
-    "description": "Toggle focus mode in RSpec files",
-    "version": "0.0.1",
+    "description": "Add and clear focus mode in RSpec files",
+    "version": "0.1.0",
     "publisher": "asux",
-    "engines": {
-        "vscode": "^1.15.0"
+    "icon": "rspec.png",
+    "galleryBanner": {
+        "color": "#232323",
+        "theme": "dark"
     },
+    "author": {
+        "name": "Alex Ulianytskyi",
+        "email": "a.ulyanitsky@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/asux/vscode-rspec-focus.git"
+    },
+    "bugs": {
+        "url": "https://github.com/asux/vscode-rspec-focus/issues"
+    },
+    "homepage": "https://github.com/asux/vscode-rspec-focus",
     "categories": [
         "Other"
     ],
-    "activationEvents": [
-        "onCommand:extension.sayHello"
+    "keywords": [
+        "ruby",
+        "rspec",
+        "focus"
     ],
-    "main": "./out/src/extension",
+    "activationEvents": [
+        "onLanguage:ruby"
+    ],
+    "main": "./out/src/rspec-focus",
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "rspec-focus.add",
+                "title": "RSpec Focus: Add"
+            },
+            {
+                "command": "rspec-focus.clear",
+                "title": "RSpec Focus: Clear"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "rspec-focus.add",
+                "key": "ctrl-alt-cmd-t",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "rspec-focus.clear",
+                "key": "ctrl-alt-cmd-z",
+                "when": "editorTextFocus"
             }
         ]
+    },
+    "engines": {
+        "vscode": "^1.15.0"
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",

@@ -3,5 +3,5 @@ All notable changes to the "rspec-focus" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
+## 0.1.0
 - Initial release
