@@ -27,17 +27,27 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {
 }
 
+const KEYWORDS = [
+    'it', 'example', 'specify',
+    'describe', 'context', 'feature', 'scenario',
+    'shared_examples', 'shared_examples_for', 'shared_context',
+    'it_behaves_like'
+]
+
+function getKeywordsRegexp() {
+    return new RegExp(`(?:${KEYWORDS.join('|')})\\s['"].+['"]\\sdo$`, 'm')
+}
+
 function add() {
-    var editor = vscode.window.activeTextEditor;
+    const editor = vscode.window.activeTextEditor;
     if (!editor) {
         return; // No open text editor
     }
     editor.edit(edit => {
-        const regexp = /(?:it|describe|context|feature|scenario)\s['"].+['"]\sdo$/m
-        var activePosition = editor.selection.active;
+        const activePosition = editor.selection.active;
         for (var i = activePosition.line; i >= 0; i--) {
             var text = editor.document.lineAt(i).text;
-            var matches = text.match(regexp);
+            var matches = text.match(getKeywordsRegexp());
             if (matches) {
                 if (matches[0].includes(', focus: true')) {
                     continue;
