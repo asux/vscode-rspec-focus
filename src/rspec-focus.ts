@@ -52,7 +52,7 @@ function add() {
                 if (matches[0].includes(', focus: true')) {
                     continue;
                 } else {
-                    let position = new Position(i, text.indexOf('do') - 1);
+                    let position = new Position(i, text.lastIndexOf('do') - 1);
                     edit.replace(position, ', focus: true');
                     break;
                 }
