@@ -38,6 +38,10 @@ function getKeywordsRegexp() {
     return new RegExp(`(?:${KEYWORDS.join('|')})\\s['"].+['"]\\sdo$`, 'm')
 }
 
+function getRSpecBlockRegexp() {
+  return new RegExp(`^\s*RSpec\..*do$`, "m");
+}
+
 function add() {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
@@ -47,7 +51,7 @@ function add() {
         const activePosition = editor.selection.active;
         for (var i = activePosition.line; i >= 0; i--) {
             var text = editor.document.lineAt(i).text;
-            var matches = text.match(getKeywordsRegexp());
+            var matches = text.match(getKeywordsRegexp()) || text.match(getRSpecBlockRegexp());
             if (matches) {
                 if (matches[0].includes(', focus: true')) {
                     continue;
