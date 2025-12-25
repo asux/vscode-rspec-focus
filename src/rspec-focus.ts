@@ -31,7 +31,7 @@ const KEYWORDS = [
     'it', 'example', 'specify',
     'describe', 'context', 'feature', 'scenario',
     'shared_examples', 'shared_examples_for', 'shared_context',
-    'it_behaves_like'
+    'include_examples', 'include_context', 'it_behaves_like', 'it_should_behave_like'
 ];
 
 const FOCUS_TAG = ', :focus';
