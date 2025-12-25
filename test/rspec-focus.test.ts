@@ -20,7 +20,7 @@ suite("RSpec Focus Functional Tests", () => {
         
         await vscode.commands.executeCommand('rspec-focus.add');
         
-        assert.strictEqual(editor.document.lineAt(0).text, "it 'does something', focus: true do");
+        assert.strictEqual(editor.document.lineAt(0).text, "it 'does something', :focus do");
     });
 
     test("Add focus to 'describe' block", async () => {
@@ -30,7 +30,7 @@ suite("RSpec Focus Functional Tests", () => {
         editor.selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 0));
         await vscode.commands.executeCommand('rspec-focus.add');
         
-        assert.strictEqual(editor.document.lineAt(0).text, "describe 'User', focus: true do");
+        assert.strictEqual(editor.document.lineAt(0).text, "describe 'User', :focus do");
     });
 
     test("Add focus to RSpec.describe block", async () => {
@@ -40,7 +40,7 @@ suite("RSpec Focus Functional Tests", () => {
         editor.selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 0));
         await vscode.commands.executeCommand('rspec-focus.add');
         
-        assert.strictEqual(editor.document.lineAt(0).text, "RSpec.describe 'User', focus: true do");
+        assert.strictEqual(editor.document.lineAt(0).text, "RSpec.describe 'User', :focus do");
     });
 
     test("Add focus to nested block from inside", async () => {
@@ -51,21 +51,21 @@ suite("RSpec Focus Functional Tests", () => {
         editor.selection = new vscode.Selection(new vscode.Position(2, 2), new vscode.Position(2, 2));
         await vscode.commands.executeCommand('rspec-focus.add');
         
-        assert.strictEqual(editor.document.lineAt(1).text, "  it 'is valid', focus: true do");
+        assert.strictEqual(editor.document.lineAt(1).text, "  it 'is valid', :focus do");
     });
 
     test("Idempotency: don't add focus if already present", async () => {
-        const content = "it 'is valid', focus: true do\nend";
+        const content = "it 'is valid', :focus do\nend";
         const editor = await setupEditor(content);
         
         editor.selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 0));
         await vscode.commands.executeCommand('rspec-focus.add');
         
-        assert.strictEqual(editor.document.lineAt(0).text, "it 'is valid', focus: true do");
+        assert.strictEqual(editor.document.lineAt(0).text, "it 'is valid', :focus do");
     });
 
     test("Clear all focus in file", async () => {
-        const content = "describe 'User', focus: true do\n  it 'is valid', focus: true do\n  end\nend";
+        const content = "describe 'User', :focus do\n  it 'is valid', :focus do\n  end\nend";
         const editor = await setupEditor(content);
         
         await vscode.commands.executeCommand('rspec-focus.clear');

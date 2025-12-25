@@ -34,6 +34,8 @@ const KEYWORDS = [
     'it_behaves_like'
 ];
 
+const FOCUS_TAG = ', :focus';
+
 function getKeywordsRegexp(): RegExp {
     return new RegExp(`(?:${KEYWORDS.join('|')})\\s['"].+['"]\\sdo$`, 'm');
 }
@@ -56,13 +58,13 @@ async function add() {
             const matches = text.match(getKeywordsRegexp()) || text.match(getRSpecBlockRegexp());
             
             if (matches) {
-                if (text.includes(', focus: true')) {
+                if (text.includes(FOCUS_TAG)) {
                     continue;
                 } else {
                     const doIndex = text.lastIndexOf('do');
                     if (doIndex !== -1) {
                         const position = new Position(i, doIndex - 1);
-                        editBuilder.insert(position, ', focus: true');
+                        editBuilder.insert(position, FOCUS_TAG);
                     }
                     break;
                 }
@@ -78,15 +80,14 @@ async function clear() {
     }
 
     await editor.edit(editBuilder => {
-        const focusString = ', focus: true';
         for (let i = 0; i < editor.document.lineCount; i++) {
             const line = editor.document.lineAt(i);
             const text = line.text;
-            const focusIndex = text.indexOf(focusString);
+            const focusIndex = text.indexOf(FOCUS_TAG);
             
             if (focusIndex !== -1) {
                 const start = new Position(i, focusIndex);
-                const end = new Position(i, focusIndex + focusString.length);
+                const end = new Position(i, focusIndex + FOCUS_TAG.length);
                 editBuilder.delete(new Range(start, end));
             }
         }
