@@ -32,32 +32,38 @@ const KEYWORDS = [
     'describe', 'context', 'feature', 'scenario',
     'shared_examples', 'shared_examples_for', 'shared_context',
     'it_behaves_like'
-]
+];
 
-function getKeywordsRegexp() {
-    return new RegExp(`(?:${KEYWORDS.join('|')})\\s['"].+['"]\\sdo$`, 'm')
+function getKeywordsRegexp(): RegExp {
+    return new RegExp(`(?:${KEYWORDS.join('|')})\\s['"].+['"]\\sdo$`, 'm');
 }
 
-function getRSpecBlockRegexp() {
-  return new RegExp(`^\s*RSpec\..*do$`, "m");
+function getRSpecBlockRegexp(): RegExp {
+    return /^\s*RSpec\..*do$/m;
 }
 
-function add() {
+async function add() {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
-        return; // No open text editor
+        return;
     }
-    editor.edit(edit => {
+
+    await editor.edit(editBuilder => {
         const activePosition = editor.selection.active;
-        for (var i = activePosition.line; i >= 0; i--) {
-            var text = editor.document.lineAt(i).text;
-            var matches = text.match(getKeywordsRegexp()) || text.match(getRSpecBlockRegexp());
+        for (let i = activePosition.line; i >= 0; i--) {
+            const line = editor.document.lineAt(i);
+            const text = line.text;
+            const matches = text.match(getKeywordsRegexp()) || text.match(getRSpecBlockRegexp());
+            
             if (matches) {
-                if (matches[0].includes(', focus: true')) {
+                if (text.includes(', focus: true')) {
                     continue;
                 } else {
-                    let position = new Position(i, text.lastIndexOf('do') - 1);
-                    edit.replace(position, ', focus: true');
+                    const doIndex = text.lastIndexOf('do');
+                    if (doIndex !== -1) {
+                        const position = new Position(i, doIndex - 1);
+                        editBuilder.insert(position, ', focus: true');
+                    }
                     break;
                 }
             }
@@ -65,19 +71,23 @@ function add() {
     });
 }
 
-function clear() {
-    var editor = vscode.window.activeTextEditor;
+async function clear() {
+    const editor = vscode.window.activeTextEditor;
     if (!editor) {
-        return; // No open text editor
+        return;
     }
-    editor.edit(edit => {
-        for (var i = 0; i < editor.document.lineCount; i++) {
-            var text = editor.document.lineAt(i).text;
-            const focus = ', focus: true';
-            if (text.includes(focus)) {
-                let start = new Position(i, text.indexOf(focus));
-                let end = new Position(i, start.character + focus.length);
-                edit.replace(new Range(start, end), '');
+
+    await editor.edit(editBuilder => {
+        const focusString = ', focus: true';
+        for (let i = 0; i < editor.document.lineCount; i++) {
+            const line = editor.document.lineAt(i);
+            const text = line.text;
+            const focusIndex = text.indexOf(focusString);
+            
+            if (focusIndex !== -1) {
+                const start = new Position(i, focusIndex);
+                const end = new Position(i, focusIndex + focusString.length);
+                editBuilder.delete(new Range(start, end));
             }
         }
     });
