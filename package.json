@@ -3,6 +3,7 @@
     "displayName": "RSpec Focus",
     "description": "Add and clear focus mode in RSpec files",
     "version": "0.3.0",
+    "license": "BSD-2-Clause",
     "publisher": "asux",
     "icon": "rspec.png",
     "galleryBanner": {
@@ -10,7 +11,7 @@
         "theme": "dark"
     },
     "author": {
-        "name": "Alex Ulianytskyi",
+        "name": "Oleksandr Ulianytskyi",
         "email": "a.ulyanitsky@gmail.com"
     },
     "repository": {
