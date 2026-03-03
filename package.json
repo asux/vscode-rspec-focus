@@ -1,81 +1,81 @@
 {
-    "name": "rspec-focus",
-    "displayName": "RSpec Focus",
-    "description": "Add and clear focus mode in RSpec files",
-    "version": "0.3.0",
-    "license": "BSD-2-Clause",
-    "publisher": "asux",
-    "icon": "rspec.png",
-    "galleryBanner": {
-        "color": "#232323",
-        "theme": "dark"
-    },
-    "author": {
-        "name": "Oleksandr Ulianytskyi",
-        "email": "a.ulyanitsky@gmail.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/asux/vscode-rspec-focus.git"
-    },
-    "bugs": {
-        "url": "https://github.com/asux/vscode-rspec-focus/issues"
-    },
-    "homepage": "https://github.com/asux/vscode-rspec-focus",
-    "categories": [
-        "Other"
+  "name": "rspec-focus",
+  "displayName": "RSpec Focus",
+  "description": "Add and clear focus mode in RSpec files",
+  "version": "0.3.0",
+  "license": "MIT",
+  "publisher": "asux",
+  "icon": "rspec.png",
+  "galleryBanner": {
+    "color": "#232323",
+    "theme": "dark"
+  },
+  "author": {
+    "name": "Oleksandr Ulianytskyi",
+    "email": "a.ulyanitsky@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asux/vscode-rspec-focus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/asux/vscode-rspec-focus/issues"
+  },
+  "homepage": "https://github.com/asux/vscode-rspec-focus",
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "ruby",
+    "rspec",
+    "focus"
+  ],
+  "activationEvents": [
+    "onLanguage:ruby"
+  ],
+  "main": "./out/src/rspec-focus",
+  "contributes": {
+    "commands": [
+      {
+        "command": "rspec-focus.add",
+        "title": "RSpec Focus: Add"
+      },
+      {
+        "command": "rspec-focus.clear",
+        "title": "RSpec Focus: Clear"
+      }
     ],
-    "keywords": [
-        "ruby",
-        "rspec",
-        "focus"
-    ],
-    "activationEvents": [
-        "onLanguage:ruby"
-    ],
-    "main": "./out/src/rspec-focus",
-    "contributes": {
-        "commands": [
-            {
-                "command": "rspec-focus.add",
-                "title": "RSpec Focus: Add"
-            },
-            {
-                "command": "rspec-focus.clear",
-                "title": "RSpec Focus: Clear"
-            }
-        ],
-        "keybindings": [
-            {
-                "command": "rspec-focus.add",
-                "key": "ctrl-alt-cmd-t",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "rspec-focus.clear",
-                "key": "ctrl-alt-cmd-z",
-                "when": "editorTextFocus"
-            }
-        ]
-    },
-    "engines": {
-        "vscode": "^1.75.0"
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "pretest": "npm run compile",
-        "test": "node ./out/test/runTest.js"
-    },
-    "devDependencies": {
-        "@types/glob": "^8.1.0",
-        "@types/mocha": "^10.0.1",
-        "@types/node": "^18.15.11",
-        "@types/vscode": "^1.75.0",
-        "@vscode/test-electron": "^2.3.0",
-        "glob": "^8.1.0",
-        "mocha": "^10.2.0",
-        "typescript": "^5.9.3"
-    }
+    "keybindings": [
+      {
+        "command": "rspec-focus.add",
+        "key": "ctrl-alt-cmd-t",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "rspec-focus.clear",
+        "key": "ctrl-alt-cmd-z",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.15.11",
+    "@types/vscode": "^1.75.0",
+    "@vscode/test-electron": "^2.3.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^5.9.3"
+  }
 }
