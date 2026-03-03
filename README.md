@@ -6,6 +6,7 @@ Ported from Atom's [package](https://github.com/traviskroberts/atom-rspec-focus)
 ## Features
 
 With this extension you can:
+
 - add `:focus` tag to nearest RSpec test (moving upwards from cursor)
 - clear all `:focus` tags from current buffer
 
@@ -28,9 +29,9 @@ Keymaps
 ### 0.2.0 (2017-11-09)
 
 - Support more RSpec keywords:
-    `specify`, `example`, `feature`, `scenario`,
-    `shared_examples`, `shared_examples_for`,
-    `shared_context`, `it_behaves_like`.
+  `specify`, `example`, `feature`, `scenario`,
+  `shared_examples`, `shared_examples_for`,
+  `shared_context`, `it_behaves_like`.
 
 ### 0.1.0
 

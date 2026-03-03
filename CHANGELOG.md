@@ -15,9 +15,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## 0.2.0 (2017-11-09)
 
 - Support more RSpec keywords:
-    `specify`, `example`, `feature`, `scenario`,
-    `shared_examples`, `shared_examples_for`,
-    `shared_context`, `it_behaves_like`.
+  `specify`, `example`, `feature`, `scenario`,
+  `shared_examples`, `shared_examples_for`,
+  `shared_context`, `it_behaves_like`.
 
 ## 0.1.0
 
