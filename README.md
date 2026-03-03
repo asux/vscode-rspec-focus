@@ -16,6 +16,10 @@ Keymaps
 
 `ctrl-alt-cmd-z` - Clear all `:focus` tags from current open buffer.
 
+## Open VSX
+
+This extension also available at [Open VCX](https://open-vsx.org/extension/asux/rspec-focus).
+
 ## Release Notes
 
 Full changelog available at [CHANGELOG.md](./CHANGELOG.md)
