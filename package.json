@@ -83,6 +83,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "glob": "^8.1.0",
+    "jiti": "^2.6.1",
     "mocha": "^10.2.0",
     "prettier": "^3.8.1",
     "typescript": "^5.9.3",
