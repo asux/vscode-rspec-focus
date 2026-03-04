@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Tests use BDD style (`describe` / `it` / `expect`) with Mocha and Chai.
+- Tests use BDD style (`describe` / `it` / `expect`) with Mocha.
 - Main entry file renamed from `rspec-focus.ts` to `extension.ts`; test file renamed to `extension.test.ts`.
 
 ## [0.3.1] - 2026-03-03
