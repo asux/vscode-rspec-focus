@@ -6,54 +6,78 @@ on:
     tags: ['v*']
   pull_request:
     branches: [main]
-
+  release:
+    types:
+      - published
 jobs:
   build:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
+    outputs:
+      vsixPath: ${{ steps.packageExtension.outputs.vsixPath }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-
+        uses: actions/checkout@v6
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: 22
-
       - name: Install dependencies
-        run: npm install
-
+        run: npm ci
       - name: Run lint
         run: npm run lint
-
       - name: Run tests
         run: npm test
         if: runner.os == 'macOS'
-
       - name: Run tests (Linux)
         run: xvfb-run -a npm test
         if: runner.os == 'Linux'
-
-      - name: Package extension
-        run: npx vsce package
+      - name: Package Extension
+        id: packageExtension
+        uses: HaaLeo/publish-vscode-extension@v2
+        with:
+          pat: stub
+          dryRun: true
+      - name: Upload Extension Package as Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.os }}
+          path: ${{ steps.packageExtension.outputs.vsixPath }}
 
   publish:
     runs-on: ubuntu-latest
     needs: build
-    if: success() && startsWith(github.ref, 'refs/tags/')
+    if: github.event_name == 'release'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-
+        uses: actions/checkout@v6
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: 22
-
       - name: Install dependencies
-        run: npm install
-
-      - name: Publish
-        run: npx vsce publish -p ${{ secrets.VSCE_PAT }}
+        run: npm ci
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v2.5.0
+        with:
+          generate_release_notes: true
+          body: |
+            # Summary
+            See [changelog](https://github.com/asux/vscode-rspec-focus/blob/main/CHANGELOG.md#changelog)
+          name: ${{ github.ref_name }}
+          fail_on_unmatched_files: true
+          files: ${{ needs.build.outputs.vsixPath }}
+      - name: Publish to Open VSX Registry
+        uses: HaaLeo/publish-vscode-extension@v2
+        id: publishToOpenVSX
+        with:
+          pat: ${{ secrets.OVSX_PAT }}
+          extensionFile: ${{ needs.build.outputs.vsixPath }}
+      - name: Publish to Visual Studio Marketplace
+        uses: HaaLeo/publish-vscode-extension@v2
+        with:
+          pat: ${{ secrets.VSCE_PAT }}
+          registryUrl: https://marketplace.visualstudio.com
+          extensionFile: ${{ needs.build.outputs.vsixPath }}
