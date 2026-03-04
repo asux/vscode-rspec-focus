@@ -59,6 +59,10 @@ jobs:
           node-version: 22
       - name: Install dependencies
         run: npm ci
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: ubuntu-latest
       - name: GitHub Release
         uses: softprops/action-gh-release@v2.5.0
         with:
