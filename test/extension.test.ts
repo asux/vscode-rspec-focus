@@ -73,4 +73,24 @@ suite('RSpec Focus Functional Tests', () => {
     assert.strictEqual(editor.document.lineAt(0).text, "describe 'User' do");
     assert.strictEqual(editor.document.lineAt(1).text, "  it 'is valid' do");
   });
+
+  test('Uses configurable focus tag (e.g. wip)', async () => {
+    const config = vscode.workspace.getConfiguration('rspec-focus');
+    const original = config.get<string>('focusTag');
+    try {
+      await config.update('focusTag', 'wip', vscode.ConfigurationTarget.Global);
+
+      const content = "it 'work in progress' do\nend";
+      const editor = await setupEditor(content);
+      editor.selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 0));
+
+      await vscode.commands.executeCommand('rspec-focus.add');
+      assert.strictEqual(editor.document.lineAt(0).text, "it 'work in progress', :wip do");
+
+      await vscode.commands.executeCommand('rspec-focus.clear');
+      assert.strictEqual(editor.document.lineAt(0).text, "it 'work in progress' do");
+    } finally {
+      await config.update('focusTag', original, vscode.ConfigurationTarget.Global);
+    }
+  });
 });
