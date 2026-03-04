@@ -2,36 +2,33 @@ import path from 'node:path';
 import Mocha from 'mocha';
 import { glob } from 'glob';
 
-export function run(): Promise<void> {
-  // Create the mocha test
+export async function run(): Promise<void> {
   const mocha = new Mocha({
-    ui: 'tdd',
+    ui: 'bdd',
     color: true
   });
 
   const testsRoot = path.resolve(__dirname, '..');
 
-  return new Promise((c, e) => {
+  return new Promise((resolve, reject) => {
     glob('**/*.test.js', { cwd: testsRoot }, (err: Error | null, files: string[]) => {
       if (err) {
-        return e(err);
+        return reject(err);
       }
 
-      // Add files to the test suite
       files.forEach((f: string) => mocha.addFile(path.resolve(testsRoot, f)));
 
       try {
-        // Run the mocha test
         mocha.run((failures: number) => {
           if (failures > 0) {
-            e(new Error(`${failures} tests failed.`));
+            reject(new Error(`${failures} tests failed.`));
           } else {
-            c();
+            resolve();
           }
         });
       } catch (err) {
         console.error(err);
-        e(err instanceof Error ? err : new Error(String(err)));
+        reject(err instanceof Error ? err : new Error(String(err)));
       }
     });
   });

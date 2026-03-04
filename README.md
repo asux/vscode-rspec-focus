@@ -3,6 +3,8 @@
 Add and clear `:focus` tag in RSpec files.
 Ported from Atom's [package](https://github.com/traviskroberts/atom-rspec-focus) by [@traviskroberts](https://github.com/traviskroberts).
 
+This extension also available at [Open VCX](https://open-vsx.org/extension/asux/rspec-focus).
+
 ## Features
 
 With this extension you can:
@@ -16,9 +18,9 @@ Keymaps
 
 `ctrl-alt-cmd-z` - Clear all `:focus` tags from current open buffer.
 
-## Open VSX
+## Development
 
-This extension also available at [Open VCX](https://open-vsx.org/extension/asux/rspec-focus).
+Tests use a BDD style (`describe` / `it` / `expect`) with Mocha and Chai. Run with `npm test`.
 
 ## Release Notes
 
