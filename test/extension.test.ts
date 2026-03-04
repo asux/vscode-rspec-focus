@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import assert from 'node:assert';
 import vscode from 'vscode';
 
 describe('RSpec Focus', () => {
@@ -18,7 +18,7 @@ describe('RSpec Focus', () => {
 
       await vscode.commands.executeCommand('rspec-focus.add');
 
-      expect(editor.document.lineAt(0).text).to.equal("it 'does something', :focus do");
+      assert.strictEqual(editor.document.lineAt(0).text, "it 'does something', :focus do");
     });
 
     it("adds :focus tag to 'describe' block", async () => {
@@ -28,7 +28,7 @@ describe('RSpec Focus', () => {
 
       await vscode.commands.executeCommand('rspec-focus.add');
 
-      expect(editor.document.lineAt(0).text).to.equal("describe 'User', :focus do");
+      assert.strictEqual(editor.document.lineAt(0).text, "describe 'User', :focus do");
     });
 
     it('adds :focus tag to RSpec.describe block', async () => {
@@ -38,7 +38,7 @@ describe('RSpec Focus', () => {
 
       await vscode.commands.executeCommand('rspec-focus.add');
 
-      expect(editor.document.lineAt(0).text).to.equal("RSpec.describe 'User', :focus do");
+      assert.strictEqual(editor.document.lineAt(0).text, "RSpec.describe 'User', :focus do");
     });
 
     it('adds :focus to nearest block when cursor is inside nested block', async () => {
@@ -48,7 +48,7 @@ describe('RSpec Focus', () => {
 
       await vscode.commands.executeCommand('rspec-focus.add');
 
-      expect(editor.document.lineAt(1).text).to.equal("  it 'is valid', :focus do");
+      assert.strictEqual(editor.document.lineAt(1).text, "  it 'is valid', :focus do");
     });
 
     it('does not add focus when tag is already present', async () => {
@@ -58,7 +58,7 @@ describe('RSpec Focus', () => {
 
       await vscode.commands.executeCommand('rspec-focus.add');
 
-      expect(editor.document.lineAt(0).text).to.equal("it 'is valid', :focus do");
+      assert.strictEqual(editor.document.lineAt(0).text, "it 'is valid', :focus do");
     });
   });
 
@@ -69,8 +69,8 @@ describe('RSpec Focus', () => {
 
       await vscode.commands.executeCommand('rspec-focus.clear');
 
-      expect(editor.document.lineAt(0).text).to.equal("describe 'User' do");
-      expect(editor.document.lineAt(1).text).to.equal("  it 'is valid' do");
+      assert.strictEqual(editor.document.lineAt(0).text, "describe 'User' do");
+      assert.strictEqual(editor.document.lineAt(1).text, "  it 'is valid' do");
     });
   });
 
@@ -86,10 +86,10 @@ describe('RSpec Focus', () => {
         editor.selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 0));
 
         await vscode.commands.executeCommand('rspec-focus.add');
-        expect(editor.document.lineAt(0).text).to.equal("it 'work in progress', :wip do");
+        assert.strictEqual(editor.document.lineAt(0).text, "it 'work in progress', :wip do");
 
         await vscode.commands.executeCommand('rspec-focus.clear');
-        expect(editor.document.lineAt(0).text).to.equal("it 'work in progress' do");
+        assert.strictEqual(editor.document.lineAt(0).text, "it 'work in progress' do");
       } finally {
         await config.update('focusTag', original, vscode.ConfigurationTarget.Global);
       }

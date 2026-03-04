@@ -18,10 +18,6 @@ Keymaps
 
 `ctrl-alt-cmd-z` - Clear all `:focus` tags from current open buffer.
 
-## Development
-
-Tests use a BDD style (`describe` / `it` / `expect`) with Mocha and Chai. Run with `npm test`.
-
 ## Release Notes
 
 Full changelog available at [CHANGELOG.md](./CHANGELOG.md)
