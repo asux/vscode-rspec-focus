@@ -42,7 +42,13 @@ const KEYWORDS = [
   'it_should_behave_like'
 ];
 
-const FOCUS_TAG = ', :focus';
+const DEFAULT_FOCUS_TAG = 'focus';
+
+function getFocusTag(): string {
+  const raw = vscode.workspace.getConfiguration('rspec-focus').get<string>('focusTag', DEFAULT_FOCUS_TAG);
+  const sanitized = (raw ?? '').replace(/^:+/, '').replace(/[^a-zA-Z0-9_].*$/, '') || DEFAULT_FOCUS_TAG;
+  return `, :${sanitized}`;
+}
 
 function getKeywordsRegexp(): RegExp {
   return new RegExp(`(?:${KEYWORDS.join('|')})\\s['"].+['"]\\sdo$`, 'm');
@@ -58,6 +64,7 @@ async function add() {
     return;
   }
 
+  const focusTag = getFocusTag();
   await editor.edit((editBuilder) => {
     const activePosition = editor.selection.active;
     for (let i = activePosition.line; i >= 0; i--) {
@@ -66,13 +73,13 @@ async function add() {
       const matches = text.match(getKeywordsRegexp()) || text.match(getRSpecBlockRegexp());
 
       if (matches) {
-        if (text.includes(FOCUS_TAG)) {
+        if (text.includes(focusTag)) {
           continue;
         } else {
           const doIndex = text.lastIndexOf('do');
           if (doIndex !== -1) {
             const position = new Position(i, doIndex - 1);
-            editBuilder.insert(position, FOCUS_TAG);
+            editBuilder.insert(position, focusTag);
           }
           break;
         }
@@ -87,15 +94,16 @@ async function clear() {
     return;
   }
 
+  const focusTag = getFocusTag();
   await editor.edit((editBuilder) => {
     for (let i = 0; i < editor.document.lineCount; i++) {
       const line = editor.document.lineAt(i);
       const text = line.text;
-      const focusIndex = text.indexOf(FOCUS_TAG);
+      const focusIndex = text.indexOf(focusTag);
 
       if (focusIndex !== -1) {
         const start = new Position(i, focusIndex);
-        const end = new Position(i, focusIndex + FOCUS_TAG.length);
+        const end = new Position(i, focusIndex + focusTag.length);
         editBuilder.delete(new Range(start, end));
       }
     }

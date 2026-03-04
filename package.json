@@ -35,6 +35,16 @@
   ],
   "main": "./out/src/extension",
   "contributes": {
+    "configuration": {
+      "title": "RSpec Focus",
+      "properties": {
+        "rspec-focus.focusTag": {
+          "type": "string",
+          "default": "focus",
+          "description": "RSpec tag used for focus (e.g. focus, wip). Inserted as :tag in examples."
+        }
+      }
+    },
     "commands": [
       {
         "command": "rspec-focus.add",
