@@ -2,7 +2,7 @@
   "name": "rspec-focus",
   "displayName": "RSpec Focus",
   "description": "Add and clear focus mode in RSpec files",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "license": "MIT",
   "publisher": "asux",
   "icon": "rspec.png",
@@ -33,7 +33,7 @@
   "activationEvents": [
     "onLanguage:ruby"
   ],
-  "main": "./out/src/rspec-focus",
+  "main": "./out/src/extension",
   "contributes": {
     "commands": [
       {
