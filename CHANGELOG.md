@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-03-04
+
+### Added
+
+- Configurable focus tag: new setting `rspec-focus.focusTag` (default `"focus"`), configurable in Settings UI and `settings.json`. Use e.g. `"wip"` for work-in-progress tagging ([#1](https://github.com/asux/vscode-rspec-focus/issues/1)).
+- Add and Clear commands now use the configured tag (e.g. `:focus` or `:wip`). Tag value is sanitized to valid symbol characters; invalid or empty values fall back to `"focus"`.
+
+### Changed
+
+- Tests use BDD style (`describe` / `it` / `expect`) with Mocha and Chai.
+- Main entry file renamed from `rspec-focus.ts` to `extension.ts`; test file renamed to `extension.test.ts`.
+
 ## [0.3.1] - 2026-03-03
 
 ### Added
@@ -56,7 +68,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[Unreleased]: https://github.com/asux/vscode-rspec-focus/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/asux/vscode-rspec-focus/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/asux/vscode-rspec-focus/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/asux/vscode-rspec-focus/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/asux/vscode-rspec-focus/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/asux/vscode-rspec-focus/compare/v0.1.0...v0.2.0
