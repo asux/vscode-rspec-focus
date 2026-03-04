@@ -1,6 +1,6 @@
 import path from 'node:path';
+import { glob } from 'node:fs';
 import Mocha from 'mocha';
-import { glob } from 'glob';
 
 export async function run(): Promise<void> {
   const mocha = new Mocha({
